@@ -1,7 +1,9 @@
 'use client';
 
+import { store } from '@/store';
 import { ThemeProvider } from 'next-themes';
 import { useState, useEffect } from 'react';
+import { Provider } from 'react-redux';
 
 const Providers = ({ children }) => {
   const [isMounted, setIsMounted] = useState(false);
@@ -15,9 +17,11 @@ const Providers = ({ children }) => {
   }
 
   return (
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-      {children}
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+        {children}
+      </ThemeProvider>
+    </Provider>
   );
 };
 
