@@ -11,7 +11,7 @@ const layout = ({children}) => {
 
       <div className="lg:col-span-4 relative">
           <Navbar />
-        <div className=''>
+        <div className='py-10 lg:py-14 px-4 lg:px-6'>
           {children}
         </div>
       </div>
