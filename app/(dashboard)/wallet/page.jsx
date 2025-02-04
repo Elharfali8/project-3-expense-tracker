@@ -31,6 +31,8 @@ const WalletPage = () => {
     setAmount('')
   }
 
+  
+
   return (
     <div className="p-6 space-y-6">
       <h1 className="text-2xl font-bold">Wallet</h1>
@@ -59,7 +61,7 @@ const WalletPage = () => {
           </SelectTrigger>
           <SelectContent>
             {wallets.map(wallet => (
-              <SelectItem key={wallet.id} value={wallet.id.toString()}>
+              <SelectItem key={wallet.id} value={wallet.id}>
                 {wallet.name}
               </SelectItem>
             ))}

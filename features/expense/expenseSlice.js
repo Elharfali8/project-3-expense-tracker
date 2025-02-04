@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from 'uuid';
+import { format } from 'date-fns';
+import { addDataToLocalStorage, getDataFromLocalStorage } from "@/utils/localStorage";
 
 const initialState = {
-    expenses: [],
+    expenses: getDataFromLocalStorage() || [],
     categories: ['Food', 'Transport', 'Shopping', 'Entertainment', 'Bills', 'Other']
 }
 
@@ -15,6 +17,7 @@ const expenseSlice = createSlice({
             const { amount, category, description } = payload
             const newExpense = {
                 id: uuidv4(),
+                createdAt: format(new Date(), 'MMM dd, yyyy'),
                 amount: Number(amount),
                 category,
                 description
@@ -26,6 +29,7 @@ const expenseSlice = createSlice({
             }
 
             state.expenses = [...state.expenses, newExpense]
+            addDataToLocalStorage(state.expenses)
             toast.success('Expense added successfully')
         }
     }

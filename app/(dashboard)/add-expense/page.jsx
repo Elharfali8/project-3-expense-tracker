@@ -67,9 +67,10 @@ const AddExpensePage = () => {
         {expenses.map(expense => (
           <Card key={expense.id} className="p-4 shadow-md bg-muted">
             <CardContent>
-              <p className="text-lg font-bold">${expense.amount.toFixed(2)}</p>
-              <p className="text-gray-600 dark:text-gray-400">{expense.category}</p>
-              {expense.description && <p className="text-gray-500 dark:text-gray-300">{expense.description}</p>}
+                    <p className="text-gray-500 dark:text-gray-300">{expense?.createdAt}</p>
+                    <p className="text-lg font-bold text-primary">${expense?.amount.toFixed(2)}</p>
+                    <p className="text-green-500">{expense?.category}</p>
+              {expense?.description && <p className="text-gray-500 dark:text-gray-300">{expense?.description}</p>}
             </CardContent>
           </Card>
         ))}

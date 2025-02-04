@@ -1,11 +1,10 @@
+import { addWalletToLocalStorage, getWalletFromLocalStorage } from "@/utils/localStorage";
 import { createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import { v4 as uuidv4 } from 'uuid';
 
 const initialState = {
-    wallets: [
-        { id: 1, name: 'Cash', balance: 500 },
-        { id: 2, name: 'Bank Account', balance: 1500 },
-    ],
+    wallets: getWalletFromLocalStorage() || [],
     transactions: ['deposit', 'withdraw']
 }
 
@@ -18,19 +17,33 @@ const walletSlice = createSlice({
             const newWallet = {
                 id: uuidv4(),
                 name,
-                balance: 0
+                balance: Number(balance)
             }
             state.wallets = [...state.wallets, newWallet]
+            addWalletToLocalStorage(state.wallets)
+            toast.success('Wallet added successfully')
         },
         handleTransaction: (state, { payload }) => {
             const { id, transactionType, amount } = payload
-            const selectedWallet = state.wallets.find((item) => item.id === Number(id))
-            if (transactionType === 'deposit') {
-                selectedWallet.balance += Number(amount)
-            } else {
-                selectedWallet.balance -= Number(amount)
+            const selectedWallet = state.wallets.find((item) => item.id === id)
+
+            if (!selectedWallet) {
+                toast.error("Wallet not found");
+                return;
             }
-            return
+
+            if (transactionType === 'deposit') {
+                selectedWallet.balance += Number(amount);
+            } else {
+                if (selectedWallet.balance < Number(amount)) {
+                    toast.error("Insufficient balance");
+                    return;
+                }
+                selectedWallet.balance -= Number(amount);
+            }
+        
+            addWalletToLocalStorage(state.wallets);
+            toast.success("Transaction successful");
         }
     }
 })

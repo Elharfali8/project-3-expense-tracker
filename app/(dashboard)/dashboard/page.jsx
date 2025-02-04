@@ -1,20 +1,33 @@
+'use client'
+
 import BudgetOverview from '@/components/BudgetOverview'
 import ExpenseChart from '@/components/ExpensesChart'
 import ExpenseSummary from '@/components/ExpenseSummary'
-import GlobalTitle from '@/components/GlobalTitle'
 import LatestExpense from '@/components/LatestExpense'
-import Link from 'next/link'
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 const DashboardPage = () => {
+  const { expenses } = useSelector((store) => store.expense)
+  const {wallets} = useSelector((store) => store.wallet)
+
+  const totalBalance = wallets?.reduce((sum, item) => sum + item.balance, 0);
+  const totalExpenses = expenses?.reduce((sum, item) => sum + item.amount, 0)
+  const balance = totalBalance - totalExpenses
+  
+
   return (
     <div className=''>
       <div className='grid xl:grid-cols-6 gap-4'>
         <div className='xl:col-span-4'>
-          <LatestExpense />
+          <LatestExpense expenses={expenses} />
         </div>
         <div className='xl:col-span-2 grid gap-y-4'>
-          <ExpenseSummary />
+          <ExpenseSummary
+            totalBalance={totalBalance}
+            totalExpenses={totalExpenses}
+            balance={balance}
+          />
           <BudgetOverview />
         </div>
       </div>
