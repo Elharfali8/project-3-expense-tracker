@@ -1,4 +1,4 @@
-import { ChartColumn, House, Wallet, User } from "lucide-react";
+import { ChartColumn, House, Wallet, User, CircleDollarSign } from "lucide-react";
 
 export const navLinks = [
     {
@@ -21,6 +21,12 @@ export const navLinks = [
     },
     {
         id: 4,
+        title: 'add expense',
+        path: '/add-expense',
+        icon: <CircleDollarSign />
+    },
+    {
+        id: 5,
         title: 'profile',
         path: '/profile',
         icon: <User />

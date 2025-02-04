@@ -17,23 +17,19 @@ const WalletPage = () => {
   const [transactionType, setTransactionType] = useState('deposit');
   const [selectedWallet, setSelectedWallet] = useState(wallets[0]?.id || '');
 
-  // const handleTransaction = () => {
-  //   setWallets(
-  //     wallets.map(wallet =>
-  //       wallet.id === selectedWallet
-  //         ? {
-  //             ...wallet,
-  //             balance:
-  //               transactionType === 'deposit'
-  //                 ? wallet.balance + Number(amount)
-  //                 : wallet.balance - Number(amount),
-  //           }
-  //         : wallet
-  //     )
-  //   );
-  //   setAmount('');
-  // };
 
+  const handleWallet = () => {
+    dispatch(addWallet({ name: newWallet, balance: amount }))
+    setNewWallet('')
+    setAmount('')
+  }
+
+  const handleTransactions = () => {
+    dispatch(handleTransaction({ id: selectedWallet, transactionType, amount }))
+    setSelectedWallet('')
+    setTransactionType('')
+    setAmount('')
+  }
 
   return (
     <div className="p-6 space-y-6">
@@ -54,7 +50,7 @@ const WalletPage = () => {
           value={newWallet}
           onChange={e => setNewWallet(e.target.value)}
         />
-        <Button onClick={() => dispatch(addWallet({name: newWallet, balance: amount}))}>Add Wallet</Button>
+        <Button onClick={handleWallet}>Add Wallet</Button>
       </div>
       <div className="space-y-4">
         <Select onValueChange={setSelectedWallet}>
@@ -84,7 +80,7 @@ const WalletPage = () => {
             <SelectItem value="withdraw">Withdraw</SelectItem>
           </SelectContent>
         </Select>
-        <Button onClick={() => dispatch(handleTransaction({id: selectedWallet, transactionType, amount}))}>Submit Transaction</Button>
+        <Button onClick={handleTransactions}>Submit Transaction</Button>
       </div>
     </div>
   );
