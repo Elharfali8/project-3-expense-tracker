@@ -5,7 +5,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 const initialState = {
     wallets: getWalletFromLocalStorage() || [],
-    transactions: ['deposit', 'withdraw']
+    transactions: ['deposit', 'withdraw'],
+    budget: 0,
 }
 
 const walletSlice = createSlice({
@@ -44,10 +45,15 @@ const walletSlice = createSlice({
         
             addWalletToLocalStorage(state.wallets);
             toast.success("Transaction successful");
+        },
+        calcBudgetOverview: (state, { payload }) => {
+            const { income, expenses } = payload
+            const calc = (Number(expenses) / Number(income)) * 100
+            state.budget = calc.toFixed(2)
         }
     }
 })
 
-export const {addWallet,handleTransaction} = walletSlice.actions 
+export const {addWallet,handleTransaction, calcBudgetOverview} = walletSlice.actions 
 
 export default walletSlice.reducer

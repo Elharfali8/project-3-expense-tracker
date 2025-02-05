@@ -14,6 +14,8 @@ const DashboardPage = () => {
   const totalBalance = wallets?.reduce((sum, item) => sum + item.balance, 0);
   const totalExpenses = expenses?.reduce((sum, item) => sum + item.amount, 0)
   const balance = totalBalance - totalExpenses
+
+
   
 
   return (
@@ -28,7 +30,10 @@ const DashboardPage = () => {
             totalExpenses={totalExpenses}
             balance={balance}
           />
-          <BudgetOverview />
+          <BudgetOverview
+            totalBalance={totalBalance}
+            totalExpenses={totalExpenses}
+          />
         </div>
       </div>
       <div className='mt-6 lg:mt-8'>
