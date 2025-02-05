@@ -1,5 +1,6 @@
 'use client';
 
+import ProtectedRoute from '@/components/ProtectedRoute';
 import { store } from '@/store';
 import { ThemeProvider } from 'next-themes';
 import { useState, useEffect } from 'react';
@@ -18,9 +19,12 @@ const Providers = ({ children }) => {
 
   return (
     <Provider store={store}>
+    <ProtectedRoute >
+
       <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
         {children}
       </ThemeProvider>
+    </ProtectedRoute>
     </Provider>
   );
 };

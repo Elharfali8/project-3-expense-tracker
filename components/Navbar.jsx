@@ -2,6 +2,7 @@ import { Moon, User } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 import { ToggleTheme } from './ToggleTheme'
+import { Logout } from './Logout'
 
 const Navbar = () => {
   return (
@@ -11,7 +12,7 @@ const Navbar = () => {
           XpenseHub
         </Link>
         <div className='flex items-center gap-x-2'>
-          <User />
+          <Logout />
           <ToggleTheme />
         </div>
       </div>
